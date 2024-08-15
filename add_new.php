@@ -1,21 +1,43 @@
 <?php 
 include "koneksi.php";
 
-if(isset($_POST['submit'])){  //meriksa apakah tombol submit ditekan, jika ya:
-    $firstName = $_POST["firstName"]; //data dgn nama firstName di simpen ke variabel
+if(isset($_POST['submit'])){  //mastiin ke submit
+    $firstName = $_POST["firstName"]; 
     $lastName = $_POST["lastName"];
     $email = $_POST["email"];
     $gender = $_POST["gender"];
 
-    $sql = $conn->query("INSERT INTO crud VALUES(NULL, '$firstName', '$lastName', '$email', '$gender')"); //nge execute query
-    if($sql){ //kalo berhasil di execute then
-        header("Location: index.php?msg=Data berhasil diinput"); //balik ke index.php, nampilin msg
-    }else{
-        echo"Yahhhhh:". mysqli_error($conn); //nampilin penyebab errorrrr
+    $sql = $conn->query("INSERT INTO crud VALUES(NULL, '$firstName', '$lastName', '$email', '$gender')"); 
+    if($sql){ //kalo sql nya executed maka
+        echo "
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Data berhasil diinput',
+                    confirmButtonText: 'OK'
+                }).then((result) => {   //kalo mencet oke maka 
+                    if (result.isConfirmed) {
+                        window.location.href = 'index.php';
+                    }
+                });
+            });
+        </script>";
+    }else{  
+        echo "
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Yahhhhh: " . mysqli_error($conn) . "',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>";
     }
 }
-
-
 ?>
 
 <!doctype html>
@@ -24,10 +46,8 @@ if(isset($_POST['submit'])){  //meriksa apakah tombol submit ditekan, jika ya:
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- sweet alert -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet">
   </head>
   <body>
@@ -72,9 +92,7 @@ if(isset($_POST['submit'])){  //meriksa apakah tombol submit ditekan, jika ya:
         </div>
     </div>
 
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.js"></script>
   </body>
 </html>

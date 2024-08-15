@@ -21,13 +21,32 @@ include "koneksi.php";
 
     <div class="container">
       <?php //muncul msg when data is saved
-      if(isset($_GET['msg'])) {  //kalo ada url msg (dapet dari get) then muncul msg
-        $msg = $_GET['msg'];
-        echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-        '. $msg.'
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>';
-      }
+  //     if(isset($_GET['msg'])) {  //kalo ada url msg (dapet dari get) then muncul msg
+  //       $msg = $_GET['msg'];
+  //       echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  //       '. $msg.'
+  //   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  // </div>';
+  //     }
+
+
+  if (isset($_GET['msg'])) {
+    $msg = $_GET['msg'];
+    $error = isset($_GET['error']) ? $_GET['error'] : '';
+
+    echo "
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: '" . ($msg == 'success' ? 'success' : 'error') . "',
+                        title: '" . ($msg == 'success' ? 'Deleted!' : 'Error!') . "',
+                        text: '" . ($msg == 'success' ? 'Data berhasil dihapus yey' : 'Yahhh: ' . $error) . "',
+                        confirmButtonText: 'OK'
+                    });
+                });
+            </script>";
+}
+
       ?>
         <a href="add_new.php" class="btn btn-dark mb-3">Add New</a>
             <table class="table table-hover text-center">
@@ -69,6 +88,7 @@ include "koneksi.php";
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.js"></script>
   </body>
 </html>
